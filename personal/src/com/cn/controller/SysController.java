@@ -46,17 +46,12 @@ public class SysController
         return "false";
     }
     
-    @RequestMapping({ "/ForwardAdmin" })
-    public String loginForward(final HttpSession session) {
-		/*
-		 * final List<Map<String, Object>> countApparatusList =
-		 * this.userService.countApparatus(); session.setAttribute("countApparatus",
-		 * (Object)countApparatusList);
-		 */
-    	final List<Map<String, Object>> finStockList = this.userService.stocksituation();
-        session.setAttribute("findStockList", (Object)finStockList);
-        return "sys/main";
-    }
+	@RequestMapping({ "/ForwardAdmin" })
+	public String loginForward(final HttpSession session) {
+		final List<Map<String, Object>> countApparatusList = this.userService.countApparatus();
+		session.setAttribute("countApparatus", (Object) countApparatusList);
+		return "sys/main";
+	}
     
     @RequestMapping({ "/userTable" })
     public String userTable(final HttpSession session) {
@@ -72,13 +67,6 @@ public class SysController
         session.setAttribute("tname", teach.getTname());
         return "sys/teachTable";
     }
-    
-	/*
-	 * @RequestMapping({ "/apparatusTable" }) public String apparatusTable(final
-	 * HttpSession session) { final List<Map<String, Object>> findUserList =
-	 * this.userService.apparatusTable(); session.setAttribute("findApparatusList",
-	 * (Object)findUserList); return "sys/apparatusTable"; }
-	 */
     
     //股票涨跌情况查询
     @RequestMapping({ "/stocksituation" })
@@ -117,10 +105,11 @@ public class SysController
         return "true";
     }
     
+    //删除股票信息
     @ResponseBody
-    @RequestMapping({ "/delApp" })
-    public String delApp(final Integer id) {
-        this.userService.delApp(id);
+    @RequestMapping({ "/delStock" })
+    public String delStock(final Integer id) {
+        this.userService.delStock(id);
         return "true";
     }
     
@@ -187,10 +176,11 @@ public class SysController
         return "sys/addTeach";
     }
     
-    @RequestMapping({ "/addApp" })
-    public String addApp() {
-        return "sys/addApp";
-    }
+    //不查询信息，直接跳转到添加股票界面
+	@RequestMapping({ "/addStock" })
+	public String addStock() {
+	    return "sys/addStock";
+	}
     
     @ResponseBody
     @RequestMapping({ "/upUserInfo" })
@@ -213,10 +203,11 @@ public class SysController
         return "true";
     }
     
+    //添加股票
     @ResponseBody
-    @RequestMapping({ "/addAppInfo" })
-    public String addAppInfo(final String aname,final int astate) {
-        this.userService.addAppInfo(aname,astate);
+    @RequestMapping({ "/addStockInfo" })
+    public String addStockInfo(final String aname,final String stockcode,final String rise,final String fall) {
+        this.userService.addStockInfo(aname,stockcode,rise,fall);
         return "true";
     }
     

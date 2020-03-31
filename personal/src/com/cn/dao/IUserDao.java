@@ -59,7 +59,9 @@ public interface IUserDao
     
     void upTeach(@Param("id") Integer p0, @Param("tname") String p1, @Param("cid") Integer p2, @Param("ttel") String p3, @Param("taddress") String p4);
     
-    void addAppInfo(@Param("aname") String aname,@Param("astate") int astate);
+    //添加股票
+    void addStockInfo(@Param("aname") String aname,@Param("stockcode") String stockcode,@Param("rise") String rise,@Param("fall") String fall,@Param("lastlogintime") String lastlogintime);
     
-    void delApp(Integer p0);
+    //删除股票信息
+    void delStock(Integer p0);
 }

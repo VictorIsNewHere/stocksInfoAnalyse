@@ -158,8 +158,8 @@
 	<insert id="addTeachInfo"  useGeneratedKeys="true">
   		insert into teach(id,tname,cid,ttel,taddress) values(null, #{tname}, #{cid}, #{ttel}, #{taddress})
 	</insert>
-	<insert id="addAppInfo"  useGeneratedKeys="true">
-  		insert into apparatus(id,aname,astate) values(null, #{aname}, #{astate})
+	<insert id="addStockInfo"  useGeneratedKeys="true">
+  		insert into stocksituation(id,name,stockcode,rise,fall,lastlogintime) values(null, #{aname}, #{stockcode}, #{rise}, #{fall}, #{lastlogintime})
 	</insert>
 	<delete id="delUser">
 	 DELETE FROM user where id=#{id}
@@ -167,7 +167,7 @@
 	<delete id="delTeach">
 	 DELETE FROM teach where id=#{id}
 	</delete>
-   <delete id="delApp">
-	 DELETE FROM apparatus where id=#{id}
+   <delete id="delStock">
+	 DELETE FROM stocksituation where id=#{id}
 	</delete>
 </mapper>

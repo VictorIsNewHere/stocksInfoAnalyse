@@ -92,59 +92,33 @@
             </div>
         </nav>
 
-
         <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="header">
-                                <h4 class="title"><button class="btn btn-info btn-fill " onclick="add()">增加</button></h4>
-                            </div>
-                            <div class="content table-responsive table-full-width">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <th>股票编号</th>
-                                    	<th>股票名称</th>
-                                    	<th>股票代码</th>
-                                    	<th>看涨</th>
-                                    	<th>看跌</th>
-                                    	<th>输入时间</th>
-                                    	<th>操作</th>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach var="list" items="${findStockList}">
-                                        <tr>
-                                        	<td>${list.id}</td>
-                                        	<td>${list.name}</td>
-                                        	<td>${list.stockcode}</td>
-                                        	<td>${list.rise}%</td>
-                                        	<td>${list.fall}%</td>
-                                        	<td>${list.lastlogintime}</td>
-                                        	<%-- <td>
-                                        		<c:if test="${list.astate==0}">正常</c:if>
-												<c:if test="${list.astate==1}">损坏</c:if>
-											</td> --%>
-                                        	<td>
-                                        	
-                                        	<button class="btn btn-danger btn-fill " onclick="del(${list.id})">删除</button>
-                                        	</td> 
-                                        </tr>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div> 
-                    </div>
-
-
-                    
-
-
-                </div>
-            </div>
-        </div>
+				<div class="container-fluid">
+					<div class="col-lg-3 col-sm-6">
+						<div class="card">
+							<div class="content">
+								<div class="row">
+									<div class="col-xs-5">
+										<div class="icon-big icon-success text-center">
+											<i class="ti-wallet"></i>
+										</div>
+									</div>
+									<div class="col-xs-7">
+										<div class="numbers" style="font-size: 1.5em">
+											${lastLoginTime}</div>
+									</div>
+								</div>
+								<div class="footer">
+									<hr />
+									<div class="stats">
+										<i class="ti-calendar"></i> 上次登录时间
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
         <footer class="footer">
             <div class="container-fluid">
@@ -189,18 +163,19 @@ function add(){
     type: 2,
     shadeClose: true,
     shade: 0.8,
-    area: ['500px', '35%'],
-    content: 'addApp',
+    area: ['500px', '100%'],
+    content: 'addStock',
     end: function () {
+       this.close();
        location.reload();
     }
 });
 }
 function del(id){
-	layer.confirm('确认要删除该器材吗？',function(index){
+	layer.confirm('确认要删除该股票信息吗？',function(index){
 			$.ajax({
 				type: 'get',
-				url: 'delApp',
+				url: 'delStock',
 				data: {id : id},
 				success: function(data){
 					layer.msg('删除成功!',{icon: 1,time:2000});

@@ -7,6 +7,8 @@ package com.cn.service.impl;
 import com.cn.pojo.Teach;
 import com.cn.pojo.Admin;
 import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import com.cn.pojo.User;
 import javax.annotation.Resource;
@@ -19,6 +21,13 @@ public class UserServiceImpl implements IUserService
 {
     @Resource
     private IUserDao userDao;
+    @Resource
+    private IUserService userService;
+    SimpleDateFormat df;
+    
+    public UserServiceImpl() {
+        this.df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    }
     
     @Override
     public User userLogin(final String account, final String pwd) {
@@ -131,14 +140,16 @@ public class UserServiceImpl implements IUserService
         this.userDao.upTeach(id, tname, cid, ttel, taddress);
     }
     
+    //添加股票
     @Override
-    public void addAppInfo(final String aname,final int astate) {
-        this.userDao.addAppInfo(aname,astate);
+    public void addStockInfo(final String aname,final String stockcode,final String rise,final String fall) {
+        this.userDao.addStockInfo(aname,stockcode,rise,fall,this.df.format(new Date()));
     }
     
+    //删除股票信息
     @Override
-    public void delApp(final Integer id) {
-        this.userDao.delApp(id);
+    public void delStock(final Integer id) {
+        this.userDao.delStock(id);
     }
     
     @Override

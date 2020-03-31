@@ -189,23 +189,24 @@ function add(){
     type: 2,
     shadeClose: true,
     shade: 0.8,
-    area: ['500px', '35%'],
-    content: 'addApp',
+    area: ['500px', '100%'],
+    content: 'addStock',
     end: function () {
+    	this.close();
        location.reload();
     }
 });
 }
 function del(id){
-	layer.confirm('确认要删除该器材吗？',function(index){
+	layer.confirm('确认要删除该股票信息吗？',function(index){
 			$.ajax({
 				type: 'get',
-				url: 'delApp',
+				url: 'delStock',
 				data: {id : id},
 				success: function(data){
 					layer.msg('删除成功!',{icon: 1,time:2000});
 					setTimeout(function(){
-						window.location.href='apparatusTable';
+						window.location.href='stocksituation';
 					},2000)
 				},
 				error:function(data) {

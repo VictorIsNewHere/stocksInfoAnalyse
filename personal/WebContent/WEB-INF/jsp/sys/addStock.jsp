@@ -45,12 +45,29 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>器材名称</label>
+                                                <label>股票名称</label>
                                                 <input type="text" class="form-control border-input" placeholder="Name"  id="name">
                                             </div>
                                         </div>
-                                        
-                                         <div class="col-md-3">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>股票代码</label>
+                                                <input type="text" class="form-control border-input" placeholder="Stockcode"  id="stockcode">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>看涨</label>
+                                                <input type="text" class="form-control border-input" placeholder="Rise"  id="rise">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>看跌</label>
+                                                <input type="text" class="form-control border-input" placeholder="Fall"  id="fall">
+                                            </div>
+                                        </div>
+                                         <!-- <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>器材状态</label>
                                                <select name="astate" id="astate" class="form-control border-input">
@@ -58,13 +75,13 @@
                                                <option value="1">损坏</option>
                                                </select>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
 									
                                     
                                    
                                     <div class="text-center">
-                                        <button type="button" class="btn btn-info btn-fill btn-wd" onclick="update()">增加器材</button>
+                                        <button type="button" class="btn btn-info btn-fill btn-wd" onclick="update()">添加</button>
                                     </div>
                                     <div class="clearfix"></div>
                                 </form></div>
@@ -104,14 +121,18 @@
 	<script type="text/javascript">
 	function update(){
 			var name = document.getElementById("name").value;
-			var astate = document.getElementById("astate").value;
-			if(name==""){
+			var stockcode = document.getElementById("stockcode").value;
+			var rise = document.getElementById("rise").value;
+			var fall = document.getElementById("fall").value;
+			if(name==""||stockcode==""||rise==""||fall==""){
 				layer.msg('请把信息填写完整!',{icon: 2,time:2000});   
 				return false;
 			}
-			$.post("addAppInfo",{
+			$.post("addStockInfo",{
 				'aname' : name,
-				'astate':astate,
+				'stockcode':stockcode,
+				'rise':rise,
+				'fall':fall,
 			},function(result){
 				if(result == "true"){
 					layer.msg('添加成功!',{icon: 1,time:2000});

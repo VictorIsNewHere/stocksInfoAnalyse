@@ -56,9 +56,11 @@ public interface IUserService
     
     void upTeach(Integer p0, String p1, Integer p2, String p3, String p4);
     
-    void addAppInfo(String p0,int astate);
-    
-    void delApp(Integer p0);
+    //删除股票信息
+    void delStock(Integer p0);
 
 	List<Map<String, Object>> stocksituation();
+
+	//添加股票
+	void addStockInfo(String aname, String stockcode, String rise, String fall);
 }
