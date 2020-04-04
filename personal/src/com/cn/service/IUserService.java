@@ -24,8 +24,6 @@ public interface IUserService
     
     void chooseClass(String p0, Integer p1);
     
-    void updateUserInfo(Integer p0, String p1, Integer p2, Integer p3, String p4, String p5, String p6, String p7);
-    
     Admin adminLogin(String p0, String p1);
     
     void setTime(String name,String p0);
@@ -56,6 +54,8 @@ public interface IUserService
     
     void upTeach(Integer p0, String p1, Integer p2, String p3, String p4);
     
+    void updateUserInfo(Integer p0, String p1, Integer p2, Integer p3, String p4, String p5, String p6, String p7);
+    
     //删除股票信息
     void delStock(Integer p0);
 
@@ -63,4 +63,7 @@ public interface IUserService
 
 	//添加股票
 	void addStockInfo(String aname, String stockcode, String rise, String fall);
+	
+	 //更改股票信息
+    void updateStockInfo(final Integer id, final String name, final String stockcode, final Integer rise, final Integer fall, final Integer result);
 }

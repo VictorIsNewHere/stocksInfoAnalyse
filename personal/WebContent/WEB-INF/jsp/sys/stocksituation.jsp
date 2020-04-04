@@ -19,7 +19,7 @@
 	<link rel="icon" type="image/png" sizes="96x96" href="${domain}/${domain}/assets/img/favicon.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>器材信息管理</title>
+	<title>股票涨跌情况</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -104,29 +104,30 @@
                             <div class="content table-responsive table-full-width">
                                 <table class="table table-striped">
                                     <thead>
-                                        <th>股票编号</th>
                                     	<th>股票名称</th>
                                     	<th>股票代码</th>
                                     	<th>看涨</th>
                                     	<th>看跌</th>
+                                    	<th>结果</th>
                                     	<th>输入时间</th>
                                     	<th>操作</th>
                                     </thead>
                                     <tbody>
                                     <c:forEach var="list" items="${findStockList}">
                                         <tr>
-                                        	<td>${list.id}</td>
                                         	<td>${list.name}</td>
                                         	<td>${list.stockcode}</td>
                                         	<td>${list.rise}%</td>
                                         	<td>${list.fall}%</td>
-                                        	<td>${list.lastlogintime}</td>
+                                        	<td>${list.result}</td>
+                                        	<td>${list.updtime}</td>
                                         	<%-- <td>
                                         		<c:if test="${list.astate==0}">正常</c:if>
 												<c:if test="${list.astate==1}">损坏</c:if>
 											</td> --%>
                                         	<td>
-                                        	
+                                        	<button class="btn btn-primary btn-fill " onclick="update(${list.id},'${list.name}','${list.stockcode}',${list.rise},${list.fall})">修改</button>
+                                        	<%-- <button class="btn btn-primary btn-fill " onclick="update(${list})">修改</button> --%>
                                         	<button class="btn btn-danger btn-fill " onclick="del(${list.id})">删除</button>
                                         	</td> 
                                         </tr>
@@ -192,10 +193,14 @@ function add(){
     area: ['500px', '100%'],
     content: 'addStock',
     end: function () {
-    	this.close();
-       location.reload();
+    	var index = parent.layer.getFrameIndex(window.name);
+    	parent.layer.close(index);
+    	//location.reload();
     }
 });
+	/* window.parent.location.reload();
+	var index = parent.layer.getFrameIndex(window.name);
+	parent.layer.close(index); */
 }
 function del(id){
 	layer.confirm('确认要删除该股票信息吗？',function(index){
@@ -215,6 +220,37 @@ function del(id){
 			});		
 		});
 }
+
+/* function update(id,name,stockcode,rise,fall){
+	parent.layer.open({
+	    type: 2,
+	    title: '修改股票信息',
+	    shadeClose: true,
+	    charset: 'UTF-8',
+	    shade: 0.8,
+	    area: ['600px', '75%'],
+	    content: 'upStock?id='+id+'&name='+name+'&stockcode='+stockcode+'&rise='+rise+'&fall='+fall,
+	    end: function () {
+	       window.location.href='stocksituation';
+	    }
+	});
+} */
+
+function update(id,name,stockcode,rise,fall){
+	parent.layer.open({
+	    type: 2,
+	    title: '修改股票信息',
+	    shadeClose: true,
+	    charset: 'UTF-8',
+	    shade: 0.8,
+	    area: ['600px', '75%'],
+	    content: 'upStock?id='+id+'&name='+name+'&stockcode='+stockcode+'&rise='+rise+'&fall='+fall,
+	    end: function () {
+	       window.location.href='stocksituation';
+	    }
+	});
+}
+
 
 </script>
 

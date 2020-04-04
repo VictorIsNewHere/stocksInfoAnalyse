@@ -45,59 +45,41 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <label>用户名</label><input type="hidden"value="${upList[0]}" id="id">
-                                                <input type="text" class="form-control border-input"  placeholder="Your Account" value="${upList[1]}" id="account">
+                                                <label>股票名</label><input type="hidden"value="${upList[0]}" id="id">
+                                                <input type="text" class="form-control border-input"  placeholder="股票名" value="${upList[1]}" id="name">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>姓名</label>
-                                                <input type="text" class="form-control border-input" placeholder="Your Name" value="${upList[4]}" id="name">
+                                                <label>股票代码</label>
+                                                <input type="text" class="form-control border-input" placeholder="股票代码" value="${upList[2]}" id="stockcode">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">密码 </label>
-                                                <input type="text" class="form-control border-input" placeholder="Password" value="${upList[5]}" id="pwd">
+                                                <label>看涨</label>
+                                                <input type="text" class="form-control border-input" placeholder="看涨率" value="${upList[3]}" id="rise">
                                             </div>
                                         </div>
                                     </div>
 									<div class="row">
 									    <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>年龄</label>
-                                                <input type="text" class="form-control border-input" placeholder="Your Age" value="${upList[3]}" id="age">
+                                                <label>看跌</label>
+                                                <input type="text" class="form-control border-input" placeholder="看跌率" value="${upList[4]}" id="fall">
                                             </div>
                                         </div>
 									</div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>性别</label>
-                                                <input type="text" class="form-control border-input" placeholder="Your Sex" id="sex" <c:if test="${upList[2]==0}">value="女"</c:if><c:if test="${upList[2]==1}">value="男"</c:if>>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>联系电话</label>
-                                                <input type="text" class="form-control border-input" placeholder="Your Phone" value="${upList[6]}" id="tel">
+                                                <label>结果</label>
+                                                <input type="text" class="form-control border-input" placeholder="结果涨跌率" value="${upList[5]}" id="result">
                                             </div>
                                         </div>
                                     </div>
-
-                                  
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>详细地址</label>
-                                                <input type="text" class="form-control border-input" placeholder="Home Address" value="${upList[7]}" id="address" >
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                   
                                     <div class="text-center">
-                                        <button type="button" class="btn btn-info btn-fill btn-wd" onclick="update()">修改</button>
+                                        <button type="button" class="btn btn-info btn-fill btn-wd" onclick="update()">保存</button>
                                     </div>
                                     <div class="clearfix"></div>
                                 </form></div>
@@ -106,7 +88,6 @@
 
 
 
-    </div>
 </div>
 
 
@@ -129,7 +110,7 @@
     <!---<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>--->
 
     <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
-	<script src="${domain}/assets/js/paper-dashboard.js"></script>
+	<%-- <script src="${domain}/assets/js/paper-dashboard.js"></script> --%><!-- 为了防止报错就先注释了 -->
 
 	<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 	<script src="${domain}/assets/js/demo.js"></script>
@@ -137,46 +118,23 @@
 	<script type="text/javascript">
 	function update(){
 			var id = document.getElementById("id").value;
-			var account = document.getElementById("account").value;
 			var name = document.getElementById("name").value;
-			var pwd = document.getElementById("pwd").value;
-			var age = document.getElementById("age").value;
-			var sex = document.getElementById("sex").value;
-			var tel = document.getElementById("tel").value;
-			var address = document.getElementById("address").value;
-			if(account==""||name==""||pwd==""||age==""||sex==""||tel==""||address==""){
+			var stockcode = document.getElementById("stockcode").value;
+			var rise = document.getElementById("rise").value;
+			var fall = document.getElementById("fall").value;
+			var result = document.getElementById("result").value;
+			if(name==""||stockcode==""||rise==""||fall==""||result==""){
 				layer.msg('请把信息填写完整!',{icon: 2,time:2000});   
 				return false;
 			}
-			var regAge = new RegExp("^[0-9]*$");
-			    if(!regAge.test(age)){
-					   layer.msg('请输入正确的年龄格式!',{icon: 2,time:2000});   
-					return false;
-			    }
-			var regTel = new RegExp("^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$");
-			    if(!regTel.test(tel)){
-					   layer.msg('请输入正确的手机格式!',{icon: 2,time:2000});   
-					return false;
-			    }
-			var regSex = new RegExp("^(男|女)$");
-			    if(!regSex.test(sex)){
-					   layer.msg('请输入正确的性别!',{icon: 2,time:2000});   
-					return false;
-			    }
-			if(sex=='男'){
-				sex=1;
-			}else{
-				sex=0;
-			}
-			$.post("upUserInfo",{
+			
+			$.post("upStockInfo",{
 				id : id,
-				'account' : account,
 				'name' : name,
-				'pwd' : pwd,
-				 age : age,
-				 sex : sex,
-				'tel' : tel,
-				'address' : address,
+				'stockcode' : stockcode,
+				 rise : rise,
+				 fall : fall,
+				 result : result,
 			},function(result){
 				if(result == "true"){
 					layer.msg('修改成功!',{icon: 1,time:2000});

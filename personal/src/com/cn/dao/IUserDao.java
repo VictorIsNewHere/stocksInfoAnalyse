@@ -25,8 +25,6 @@ public interface IUserDao
     
     void chooseClass(@Param("username") String p0, @Param("cid") Integer p1);
     
-    void updateUserInfo(@Param("id") Integer p0, @Param("account") String p1, @Param("sex") Integer p2, @Param("age") Integer p3, @Param("name") String p4, @Param("pwd") String p5, @Param("tel") String p6, @Param("address") String p7);
-    
     Admin adminLogin(@Param("name") String p0, @Param("pwd") String p1);
     
     void setTime(@Param("name") String name,@Param("lastlogintime") String lastlogintime);
@@ -59,9 +57,14 @@ public interface IUserDao
     
     void upTeach(@Param("id") Integer p0, @Param("tname") String p1, @Param("cid") Integer p2, @Param("ttel") String p3, @Param("taddress") String p4);
     
+    void updateUserInfo(@Param("id") Integer p0, @Param("account") String p1, @Param("sex") Integer p2, @Param("age") Integer p3, @Param("name") String p4, @Param("pwd") String p5, @Param("tel") String p6, @Param("address") String p7);
+    
     //添加股票
-    void addStockInfo(@Param("aname") String aname,@Param("stockcode") String stockcode,@Param("rise") String rise,@Param("fall") String fall,@Param("lastlogintime") String lastlogintime);
+    void addStockInfo(@Param("aname") String aname,@Param("stockcode") String stockcode,@Param("rise") String rise,@Param("fall") String fall,@Param("updtime") String updtime);
     
     //删除股票信息
-    void delStock(Integer p0);
+    void delStock(Integer id);
+    
+    //修改股票信息
+    void updateStockInfo(@Param("id") Integer id, @Param("name") String name, @Param("stockcode") String stockcode, @Param("rise") Integer rise, @Param("fall") Integer fall, @Param("result") Integer result, @Param("updtime") String updtime);
 }

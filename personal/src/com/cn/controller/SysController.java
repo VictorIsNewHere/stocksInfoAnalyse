@@ -46,13 +46,6 @@ public class SysController
         return "false";
     }
     
-	@RequestMapping({ "/ForwardAdmin" })
-	public String loginForward(final HttpSession session) {
-		final List<Map<String, Object>> countApparatusList = this.userService.countApparatus();
-		session.setAttribute("countApparatus", (Object) countApparatusList);
-		return "sys/main";
-	}
-    
     @RequestMapping({ "/userTable" })
     public String userTable(final HttpSession session) {
         final List<Map<String, Object>> findUserList = this.userService.findUser();
@@ -66,14 +59,6 @@ public class SysController
         session.setAttribute("findTeachList", (Object)findUserList);
         session.setAttribute("tname", teach.getTname());
         return "sys/teachTable";
-    }
-    
-    //股票涨跌情况查询
-    @RequestMapping({ "/stocksituation" })
-    public String stocksituation(final HttpSession session) {
-        final List<Map<String, Object>> finStockList = this.userService.stocksituation();
-        session.setAttribute("findStockList", (Object)finStockList);
-        return "sys/stocksituation";
     }
     
     @RequestMapping({ "/exit" })
@@ -102,14 +87,6 @@ public class SysController
         if (id != 12) {
             this.userService.delTeach(id);
         }
-        return "true";
-    }
-    
-    //删除股票信息
-    @ResponseBody
-    @RequestMapping({ "/delStock" })
-    public String delStock(final Integer id) {
-        this.userService.delStock(id);
         return "true";
     }
     
@@ -176,19 +153,6 @@ public class SysController
         return "sys/addTeach";
     }
     
-    //不查询信息，直接跳转到添加股票界面
-	@RequestMapping({ "/addStock" })
-	public String addStock() {
-	    return "sys/addStock";
-	}
-    
-    @ResponseBody
-    @RequestMapping({ "/upUserInfo" })
-    public String upUserInfo(final Integer id, final String account, final Integer sex, final Integer age, final String name, final String pwd, final String tel, final String address) {
-        this.userService.updateUserInfo(id, account, sex, age, name, pwd, tel, address);
-        return "true";
-    }
-    
     @ResponseBody
     @RequestMapping(value = { "/upTeachInfo" }, method = { RequestMethod.POST })
     public String upTeach(final Integer id, final String tname, final Integer cid, final String ttel, final String taddress) {
@@ -203,6 +167,11 @@ public class SysController
         return "true";
     }
     
+    @RequestMapping({ "/JumpUserSearch" })
+    public String jumpUserSearch() {
+        return "true";
+    }
+    
     //添加股票
     @ResponseBody
     @RequestMapping({ "/addStockInfo" })
@@ -211,8 +180,57 @@ public class SysController
         return "true";
     }
     
-    @RequestMapping({ "/JumpUserSearch" })
-    public String jumpUserSearch() {
+    //不查询信息，直接跳转到添加股票界面
+	@RequestMapping({ "/addStock" })
+	public String addStock() {
+	    return "sys/addStock";
+	}
+	
+    //删除股票信息
+    @ResponseBody
+    @RequestMapping({ "/delStock" })
+    public String delStock(final Integer id) {
+        this.userService.delStock(id);
+        return "true";
+    }
+    
+    //股票涨跌情况查询
+    @RequestMapping({ "/stocksituation" })
+    public String stocksituation(final HttpSession session) {
+        final List<Map<String, Object>> finStockList = this.userService.stocksituation();
+        session.setAttribute("findStockList", (Object)finStockList);
+        return "sys/stocksituation";
+    }
+    
+    //登陆成功
+	@RequestMapping({ "/ForwardAdmin" })
+	public String loginForward(final HttpSession session) {
+		final List<Map<String, Object>> countApparatusList = this.userService.countApparatus();
+		session.setAttribute("countApparatus", (Object) countApparatusList);
+		return "sys/main";
+	}
+	
+	//跳转到修改股票信息窗口
+	@RequestMapping({ "/upStock" })
+	public String upStock(final Integer id, final String name, final String stockcode, final Integer rise, final Integer fall, final HttpSession session) {
+	    final List<Object> list = new ArrayList<Object>();
+	    list.add(id);
+	    list.add(name);
+	    list.add(stockcode);
+	    list.add(rise);
+	    list.add(fall);
+	    for (int i = 0; i < list.size(); ++i) {
+	        System.out.println(list.get(i));
+	    }
+	    session.setAttribute("upList", (Object)list);
+	    return "sys/upStock";
+	}
+    
+	//修改股票信息
+    @ResponseBody
+    @RequestMapping({ "/upStockInfo" })
+    public String upStockInfo(final Integer id, final String name, final String stockcode, final Integer rise, final Integer fall, final Integer result) {
+        this.userService.updateStockInfo(id, name, stockcode, rise, fall, result);
         return "true";
     }
 }

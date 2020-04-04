@@ -63,32 +63,6 @@
 		</set>
 		where id=#{uid}
 	</update>
-    <update id="updateUserInfo">
-		update user
-		<set>
-			account=#{account},
-			<if test="sex!=null">
-      		   sex = ${sex},
-      		</if>
-			<if test="age!=null">
-      		  age = ${age},
-      		</if>
-			<if test="name!=null">
-      		  name = #{name},
-      		</if>
-			<if test="pwd!=null">
-      		  pwd = #{pwd},
-      		</if>
-			<if test="tel!=null">
-      		  tel = #{tel},
-      		</if>
-			<if test="address!=null">
-      		  address = #{address},
-      		</if>
-		</set>
-		where id=#{id}
-	</update>
-	
 	<update id="chooseClass">
 		update user
 		<set>
@@ -123,14 +97,6 @@
 		</set>
 		where name=#{name}
 	</update>
-	
-    <!-- <update id="delApp">
-		update apparatus
-		<set>
-			astate=1
-		</set>
-		where id=#{id}
-	</update> -->
 	<select id="getSex" resultType="hashmap">
 		SELECT sex ,COUNT(sex) AS num FROM user GROUP BY sex
 	</select>
@@ -148,18 +114,11 @@
 	<select id="apparatusTable" resultType="hashmap">
 		SELECT * FROM apparatus
 	</select>
-	<!-- 查询股票涨跌情况 -->
-	<select id="stocksituation" resultType="hashmap">
-		SELECT * FROM stocksituation
-	</select>
 	<insert id="registerUser"  useGeneratedKeys="true">
   		insert into user(id,name, pwd,account,age,sex,tel,address,uclass,uteach) values(null, #{name}, #{pwd}, #{account}, ${age},${sex},#{tel},#{address},#{uclass},#{uteach})
 	</insert>
 	<insert id="addTeachInfo"  useGeneratedKeys="true">
   		insert into teach(id,tname,cid,ttel,taddress) values(null, #{tname}, #{cid}, #{ttel}, #{taddress})
-	</insert>
-	<insert id="addStockInfo"  useGeneratedKeys="true">
-  		insert into stocksituation(id,name,stockcode,rise,fall,lastlogintime) values(null, #{aname}, #{stockcode}, #{rise}, #{fall}, #{lastlogintime})
 	</insert>
 	<delete id="delUser">
 	 DELETE FROM user where id=#{id}
@@ -167,7 +126,40 @@
 	<delete id="delTeach">
 	 DELETE FROM teach where id=#{id}
 	</delete>
-   <delete id="delStock">
+	
+	<!-- 查询股票涨跌情况 -->
+	<select id="stocksituation" resultType="hashmap">
+		SELECT * FROM stocksituation
+	</select>
+	<!-- 删除股票 -->
+	<delete id="delStock">
 	 DELETE FROM stocksituation where id=#{id}
 	</delete>
+	<!-- 添加股票信息 -->
+	<insert id="addStockInfo"  useGeneratedKeys="true">
+  		insert into stocksituation(id,name,stockcode,rise,fall,lastlogintime) values(null, #{aname}, #{stockcode}, #{rise}, #{fall}, #{updtime})
+	</insert>
+	<!-- 修改股票信息 -->
+	<update id="updateStockInfo">
+		update stocksituation
+		<set>
+			name=#{name},
+			<if test="stockcode!=null">
+      		   stockcode = ${stockcode},
+      		</if>
+			<if test="rise!=null">
+      		  rise = ${rise},
+      		</if>
+			<if test="fall!=null">
+      		  fall = #{fall},
+      		</if>
+			<if test="result!=null">
+      		  result = #{result},
+      		</if>
+			<if test="updtime!=null">
+      		  updtime = #{updtime},
+      		</if>
+		</set>
+		where id=#{id}
+	</update>
 </mapper>

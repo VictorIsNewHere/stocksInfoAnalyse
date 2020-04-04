@@ -55,11 +55,6 @@ public class UserServiceImpl implements IUserService
     }
     
     @Override
-    public void updateUserInfo(final Integer id, final String account, final Integer sex, final Integer age, final String name, final String pwd, final String tel, final String address) {
-        this.userDao.updateUserInfo(id, account, sex, age, name, pwd, tel, address);
-    }
-    
-    @Override
     public Admin adminLogin(final String name, final String pwd) {
         return this.userDao.adminLogin(name, pwd);
     }
@@ -140,6 +135,16 @@ public class UserServiceImpl implements IUserService
         this.userDao.upTeach(id, tname, cid, ttel, taddress);
     }
     
+    @Override
+    public void chooseClass(final String username, final Integer cid) {
+        this.userDao.chooseClass(username, cid);
+    }
+    
+    @Override
+    public void updateUserInfo(final Integer id, final String account, final Integer sex, final Integer age, final String name, final String pwd, final String tel, final String address) {
+        this.userDao.updateUserInfo(id, account, sex, age, name, pwd, tel, address);
+    }
+    
     //添加股票
     @Override
     public void addStockInfo(final String aname,final String stockcode,final String rise,final String fall) {
@@ -152,8 +157,9 @@ public class UserServiceImpl implements IUserService
         this.userDao.delStock(id);
     }
     
+    //更改股票信息
     @Override
-    public void chooseClass(final String username, final Integer cid) {
-        this.userDao.chooseClass(username, cid);
+    public void updateStockInfo(final Integer id, final String name, final String stockcode, final Integer rise, final Integer fall, final Integer result) {
+        this.userDao.updateStockInfo(id, name, stockcode, rise, fall, result, this.df.format(new Date()));
     }
 }
